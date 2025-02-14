@@ -1,0 +1,197 @@
+/* styles.css */
+
+/* Estilo general */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente limpia */
+    overflow: hidden;
+}
+
+/* Video de fondo */
+#background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajustar el video al tamaño de la pantalla */
+    transform: translate(-50%, -50%);
+    z-index: -1; /* Colocar el video detrás de otros elementos */
+}
+
+/* Pantalla de acceso */
+.access-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6); /* Fondo translúcido */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque tipo Aero Glass */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out;
+}
+
+.access-modal-content {
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+    padding: 20px;
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 90%; /* Ancho máximo para móviles */
+    width: 100%;
+    backdrop-filter: blur(5px); /* Efecto de vidrio */
+}
+
+.access-modal input {
+    width: 100%;
+    padding: 15px; /* Más grande para móviles */
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Bordes redondeados */
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+}
+
+.access-modal button {
+    margin-top: 15px;
+    padding: 15px 20px; /* Más grande para móviles */
+    font-size: 18px;
+    background: linear-gradient(135deg, #0078d7, #005bb5); /* Degradado azul */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Animación al hacer clic */
+}
+
+.access-modal button:hover {
+    transform: scale(1.05); /* Escala al pasar el mouse */
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Contenedor para las ventanas horizontales */
+.window-container {
+    display: flex;
+    flex-direction: column; /* Apilar ventanas en móviles */
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    /* top: 50%;
+    left: 50%; */
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1; /* Asegurar que esté sobre el video */
+}
+/* Estilo para las ventanas dentro del contenedor */
+.window-container .window {
+    position: relative;
+    width: 80%; /* Ancho reducido para móviles */
+    max-width: 100%;
+    margin: 0 auto; /* Centrado horizontal */
+    display: none; /* Ocultas por defecto */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease-in-out;
+}
+
+/* Clase para activar las ventanas */
+.window-container .window.active {
+    display: block; /* Visible */
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Clase para mostrar el contenedor de ventanas */
+.visible {
+    opacity: 1; /* Visible */
+}
+
+/* Centrar ventanas únicas */
+.window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado vertical y horizontal */
+    width: 90%; /* Ancho reducido para móviles */
+    max-width: 600px; /* Ancho máximo para escritorio */
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido tipo Aero Glass */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Borde suave */
+    border-radius: 8px; /* Bordes ligeramente redondeados */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease-in-out;
+    z-index: 2; /* Asegurar que esté sobre el video */
+}
+
+/* Clase para activar las ventanas */
+.window.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* Centrado y escala normal */
+}
+
+/* Barra de título */
+.title-bar {
+    background: rgba(255, 255, 255, 0.6); /* Fondo translúcido */
+    backdrop-filter: blur(5px); /* Efecto de vidrio */
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Línea divisoria */
+}
+
+/* Botones de control */
+.title-bar-controls button {
+    width: 24px; /* Más grandes para móviles */
+    height: 24px;
+    border-radius: 50%; /* Círculos */
+    border: none;
+    cursor: default;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Colores de los botones */
+.title-bar-controls .close {
+    background-color: #e81123; /* Rojo */
+}
+
+.title-bar-controls .minimize {
+    background-color: #f9a109; /* Amarillo */
+}
+
+.title-bar-controls .resize {
+    background-color: #00a650; /* Verde */
+}
+
+/* Contenido de la ventana */
+.window-body {
+    padding: 20px;
+    min-height: 150px; /* Altura mínima reducida */
+    position: relative;
+    font-size: 16px; /* Tamaño de fuente más pequeño */
+    line-height: 1.5;
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carta de San Valentín</title>
+    <!-- Importar 7.css desde unpkg -->
+    <link rel="stylesheet" href="https://unpkg.com/7.css/dist/7.css">
+    <!-- Importar el CSS personalizado -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Video de fondo -->
+    <video id="background-video" autoplay muted loop>
+        <source src="fondo.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <!-- Pantalla de acceso -->
+    <div class="access-modal" id="accessModal">
+        <div class="access-modal-content">
+            <h2>Acceso Restringido</h2>
+            <p>Por favor, ingresa el código de acceso de 4 dígitos:</p>
+            <input type="text" id="accessCode" maxlength="4" placeholder="Código">
+            <button onclick="validateAccess()">Acceder</button>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <!-- Primera ventana (usando 7.css) -->
+    <div class="window active" id="window1">
+        <div class="title-bar">
+            <div class="title-bar-text">Ventana 1</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <span id="typed-text1"></span>
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+    <!-- Contenedor para las ventanas 2 y 3 -->
+    <div class="window-container" id="window-container">
+        <!-- Segunda ventana -->
+        <div class="window" id="window2">
+            <div class="title-bar">
+                <div class="title-bar-text">Ventana 2</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <span id="typed-text2"></span>
+                <span class="cursor"></span>
+            </div>
+        </div>
+
+        <!-- Tercera ventana -->
+        <div class="window" id="window3">
+            <div class="title-bar">
+                <div class="title-bar-text">Ventana 3</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <img src="https://media1.tenor.com/m/mwPyfAJ4kZoAAAAd/frutiger-aeto-frutiger-aero.gif" alt="GIF animado" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuarta ventana (pregunta de San Valentín) -->
+    <div class="window" id="window4">
+        <div class="title-bar">
+            <div class="title-bar-text">¿San Valentín?</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <span id="typed-text4"></span>
+            <span class="cursor"></span>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <button onclick="showResponse('yes')">Sí</button>
+                <button onclick="showResponse('no')">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Respuesta afirmativa -->
+    <div class="window" id="response-yes">
+        <div class="title-bar">
+            <div class="title-bar-text">¡Gracias!</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <span id="typed-text-yes"></span>
+            <span class="cursor"></span>
+            <img src="https://giffiles.alphacoders.com/209/209581.gif" alt="GIF afirmativo" style="max-width: 100%; height: auto; margin-top: 20px;">
+        </div>
+    </div>
+
+    <!-- Respuesta negativa -->
+    <div class="window" id="response-no">
+        <div class="title-bar">
+            <div class="title-bar-text">Entendido...</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <span id="typed-text-no"></span>
+            <span class="cursor"></span>
+            <img src="https://i.pinimg.com/originals/3c/99/4d/3c994dfcf24398b525d58dbbae46a5ff.gif" alt="GIF hgato" style="max-width: 100%; height: auto; margin-top: 20px;">
+        </div>
+    </div>
+
+    <script>
+        // Código de acceso
+        const accessCode = "1563";
+
+        // Función para validar el código de acceso
+        function validateAccess() {
+            const inputCode = document.getElementById('accessCode').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const accessModal = document.getElementById('accessModal');
+
+            if (inputCode === accessCode) {
+                // Código correcto: ocultar la pantalla de acceso con animación
+                accessModal.style.opacity = '0';
+                setTimeout(() => {
+                    accessModal.style.display = 'none'; // Ocultar completamente
+                    startApp(); // Iniciar la aplicación
+                }, 500); // Esperar a que termine la animación
+            } else {
+                // Código incorrecto: mostrar mensaje de error
+                errorMessage.textContent = "Código incorrecto. Inténtalo de nuevo.";
+            }
+        }
+
+        // Textos para cada ventana
+        const texts = [
+            `Hola, Ale.
+
+            Amor mio, hoy es 14 de febrero, el día de San Valentín.
+
+Y quería saber si te gustaría ser mi San Valentín este año. 💕`,
+            `Si aceptas, pues... te podria dar algo... algunas cosas.. no se.. 
+            yo creo que deberias aceptar.
+
+
+            Mira este gif, es muy bonito.
+
+¿Qué dices?`,
+            `¿Quieres ser mi San Valentín?`, // Ventana 4
+            `¡Sí! ¡Qué bueno que hayas elegido ser mi San Valentín! No sé qué significa del todo, pero te amo y eso es lo que importa. ❤️
+            Yo sabía que aceptarias, Te Amo`, // Respuesta afirmativa
+            `Ya sabía, no pasa nada... 😔` // Respuesta negativa
+        ];
+
+        // Función para escribir texto automáticamente
+        function typeText(textElement, text, callback) {
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < text.length) {
+                    textElement.textContent += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 50);
+        }
+
+        // Función para iniciar la aplicación después del acceso
+        function startApp() {
+            const window1 = document.getElementById('window1');
+            const typedText1 = document.getElementById('typed-text1');
+
+            // Escribir texto en la primera ventana
+            typeText(typedText1, texts[0], () => {
+                // Ocultar la primera ventana después de escribir
+                setTimeout(() => {
+                    window1.classList.remove('active'); // Desactivar la primera ventana
+                    setTimeout(() => {
+                        window1.style.display = 'none'; // Ocultarla completamente
+
+                        // Mostrar el contenedor de ventanas 2 y 3
+                        const windowContainer = document.getElementById('window-container');
+                        windowContainer.classList.add('visible');
+
+                        // Activar las ventanas 2 y 3
+                        const window2 = document.getElementById('window2');
+                        const window3 = document.getElementById('window3');
+                        const typedText2 = document.getElementById('typed-text2');
+
+                        window2.classList.add('active');
+                        window3.classList.add('active');
+
+                        // Escribir texto en ambas ventanas simultáneamente
+                        typeText(typedText2, texts[1], () => {
+                            // Ocultar las ventanas 2 y 3 después de escribir
+                            setTimeout(() => {
+                                window2.classList.remove('active');
+                                window3.classList.remove('active');
+                                setTimeout(() => {
+                                    window2.style.display = 'none';
+                                    window3.style.display = 'none';
+
+                                    // Mostrar la cuarta ventana
+                                    const window4 = document.getElementById('window4');
+                                    const typedText4 = document.getElementById('typed-text4');
+                                    window4.classList.add('active');
+
+                                    // Escribir texto en la ventana 4
+                                    typeText(typedText4, texts[2]);
+                                }, 500);
+                            }, 3000);
+                        });
+                    }, 500); // Retraso antes de mostrar las otras ventanas
+                }, 1000); // Retraso antes de ocultar la primera ventana
+            });
+        }
+
+        // Función para mostrar la respuesta según la elección
+        function showResponse(choice) {
+            const window4 = document.getElementById('window4');
+            const responseYes = document.getElementById('response-yes');
+            const responseNo = document.getElementById('response-no');
+
+            // Ocultar la cuarta ventana
+            window4.classList.remove('active');
+            setTimeout(() => {
+                window4.style.display = 'none';
+
+                // Mostrar la respuesta correspondiente
+                if (choice === 'yes') {
+                    responseYes.classList.add('active');
+                    const typedTextYes = document.getElementById('typed-text-yes');
+                    typeText(typedTextYes, texts[3]); // Animación de escritura para "Sí"
+                } else {
+                    responseNo.classList.add('active');
+                    const typedTextNo = document.getElementById('typed-text-no');
+                    typeText(typedTextNo, texts[4]); // Animación de escritura para "No"
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>
